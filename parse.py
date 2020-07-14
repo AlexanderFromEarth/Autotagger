@@ -8,10 +8,11 @@ def habr_load(id):
     # хотя названия классов на мобилке выглядят ужасно
     soup = BeautifulSoup(request.text, 'html5lib')
     title = soup.find('h1', {'class': 'tm-article-snippet__title'})
-    if not title:
+    text = soup.find('div', {'class': 'tm-article-body__content'})
+    if not title or not text:
         return None  # нет заголовка - нет статьи
     title = title.text
-    text = soup.find('div', {'class': 'tm-article-body__content'}).text
+    text = text.text
     tags = [
         tag.text
         for tag in soup.findAll('a', 'tm-article-body__tags-item-link')
